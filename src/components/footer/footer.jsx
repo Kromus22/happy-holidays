@@ -1,8 +1,8 @@
 import Container from '../container/container';
 import style from './footer.module.css';
-import { ReactComponent as VKIcon } from '../../img/Vector-1.svg';
-import { ReactComponent as TGIcon } from '../../img/Vector-2.svg';
-import { ReactComponent as PIIcon } from '../../img/Vector.svg';
+import { ReactComponent as VKIcon } from '../../img/Vector.svg';
+import { ReactComponent as TGIcon } from '../../img/Vector-1.svg';
+import { ReactComponent as PIIcon } from '../../img/Vector-2.svg';
 import { ReactComponent as STIcon } from '../../img/Group.svg';
 
 function Footer() {

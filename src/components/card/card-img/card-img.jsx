@@ -1,7 +1,11 @@
-function CardImg() {
+import { useContext } from "react";
+import { imgContext } from "../../../context/imgContext";
+
+function CardImg(props) {
+  const img = useContext(imgContext)
   return (
     <>
-      <img src='' alt='' />
+      <img src={props.img} alt='Фон открытки' width={840} height={520} />
     </>
   );
 };
