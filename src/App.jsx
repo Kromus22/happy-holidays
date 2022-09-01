@@ -3,17 +3,20 @@ import Header from './components/header/header';
 import Card from './components/card/card';
 import { TextContextProvider } from './context/textContext';
 import { ImgContextProvider } from './context/imgContext';
+import { HolidaysContextProvider } from './context/holidaysContext';
 
 function App() {
   return (
     <div>
-      <ImgContextProvider>
-        <TextContextProvider>
-          <Header />
-          <Card />
-          <Footer />
-        </TextContextProvider>
-      </ImgContextProvider>
+      <HolidaysContextProvider>
+        <ImgContextProvider>
+          <TextContextProvider>
+            <Header />
+            <Card />
+            <Footer />
+          </TextContextProvider>
+        </ImgContextProvider>
+      </HolidaysContextProvider>
     </div>
   );
 };
