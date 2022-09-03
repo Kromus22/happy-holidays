@@ -1,22 +1,32 @@
-import { useContext, useState } from 'react';
-import { holidaysContext } from '../../../context/holidaysContext';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchHolidays, setHoliday } from '../../../store/holidaysSlice';
+import { fetchText } from '../../../store/textSlice';
 import style from './chioces.module.css';
 
 
 function Choices() {
   const [isOpenChoices, setIsOpenChoices] = useState(false);
-  const { holidays, holiday, handleChangeHoliday } = useContext(holidaysContext);
+  const { holiday, holidays, loading } = useSelector(state => state.holidays);
+  const dispatch = useDispatch();
 
 
   const handleChangeChoices = () => {
+    if (loading !== 'success') return
     setIsOpenChoices(!isOpenChoices);
   };
 
+  useEffect(() => {
+    dispatch(fetchHolidays());
+  }, [dispatch]);
 
   return (
     <div className={style.wrapper}>
       <button className={style.button} onClick={handleChangeChoices}>
-        {holidays[holiday] || 'Выбрать праздник'}
+        {loading !== 'success' ?
+          'Загрузка...' :
+          holidays[holiday] || 'Выбрать праздник'}
       </button>
       {isOpenChoices && (
         <ul className={style.list}>
@@ -25,7 +35,8 @@ function Choices() {
               className={style.item}
               key={item[0]}
               onClick={() => {
-                handleChangeHoliday(item[0]);
+                dispatch(setHoliday(item[0]));
+                dispatch(fetchText(item[0]));
                 handleChangeChoices();
               }}
             >
