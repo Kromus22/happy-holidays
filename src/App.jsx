@@ -1,17 +1,17 @@
-import Footer from './components/footer/footer';
-import Header from './components/header/header';
 import Card from './components/card/card';
-import { ImgContextProvider } from './context/imgContext';
+import EmptyCard from './components/empty-card/empty-card';
+import { Route, Routes } from 'react-router-dom';
+import Layout from './components/layout/layout';
 
 function App() {
   return (
-    <div>
-      <ImgContextProvider>
-        <Header />
-        <Card />
-        <Footer />
-      </ImgContextProvider>
-    </div>
+    <Routes>
+      <Route path='/' element={<Layout />} >
+        <Route index element={<EmptyCard />} />
+        <Route path='card/:holiday' element={<Card />} />
+      </Route >
+      <Route path='singleCard/:idText/:idImg' element={<Card />} />
+    </Routes>
   );
 };
 

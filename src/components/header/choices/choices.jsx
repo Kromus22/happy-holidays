@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchHolidays, setHoliday } from '../../../store/holidaysSlice';
+import { NavLink, useParams } from 'react-router-dom';
+import { fetchHolidays } from '../../../store/holidaysSlice';
+import { fetchImage } from '../../../store/imgSlice';
 import { fetchText } from '../../../store/textSlice';
 import style from './chioces.module.css';
 
 
 function Choices() {
   const [isOpenChoices, setIsOpenChoices] = useState(false);
-  const { holiday, holidays, loading } = useSelector(state => state.holidays);
+  const { holidays, loading } = useSelector(state => state.holidays);
   const dispatch = useDispatch();
+  const { holiday } = useParams();
 
 
   const handleChangeChoices = () => {
@@ -19,7 +22,11 @@ function Choices() {
 
   useEffect(() => {
     dispatch(fetchHolidays());
-  }, [dispatch]);
+    if (holiday) {
+      dispatch(fetchText(holiday));
+      dispatch(fetchImage(holiday));
+    }
+  }, [dispatch, holiday]);
 
   return (
     <div className={style.wrapper}>
@@ -35,12 +42,15 @@ function Choices() {
               className={style.item}
               key={item[0]}
               onClick={() => {
-                dispatch(setHoliday(item[0]));
-                dispatch(fetchText(item[0]));
                 handleChangeChoices();
               }}
             >
-              {item[1]}
+              <NavLink
+                to={`card/${item[0]}`}
+                className={({ isActive }) => (isActive ? style.linkActive : '')}
+              >
+                {item[1]}
+              </NavLink>
             </li>
           ))}
         </ul>
